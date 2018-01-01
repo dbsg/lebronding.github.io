@@ -5,18 +5,22 @@
   
 
   
-  <title>Hexo</title>
+  <title>关于html兼容性的一些问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title: First Night 我有一头小毛驴，可是我从来都不骑。">
+  <meta name="description" content="1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。#解决方案就是给img标签加个包裹的盒子，例如div标签。 2、iOS11下，fixed布局里input输入框光标乱动的情况。 #暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。1234567var ver = null;var u = navigator.userAgent;va">
+<meta name="keywords" content="html,css">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="关于html兼容性的一些问题">
 <meta property="og:url" content="http://yoursite.com/2017/12/30/first/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="title: First Night 我有一头小毛驴，可是我从来都不骑。">
-<meta property="og:updated_time" content="2017-12-30T15:17:43.000Z">
+<meta property="og:description" content="1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。#解决方案就是给img标签加个包裹的盒子，例如div标签。 2、iOS11下，fixed布局里input输入框光标乱动的情况。 #暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。1234567var ver = null;var u = navigator.userAgent;va">
+<meta property="og:image" content="http://yoursite.com/images/WechatIMG747.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/WechatIMG567.jpeg">
+<meta property="og:updated_time" content="2018-01-01T13:26:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="title: First Night 我有一头小毛驴，可是我从来都不骑。">
+<meta name="twitter:title" content="关于html兼容性的一些问题">
+<meta name="twitter:description" content="1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。#解决方案就是给img标签加个包裹的盒子，例如div标签。 2、iOS11下，fixed布局里input输入框光标乱动的情况。 #暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。1234567var ver = null;var u = navigator.userAgent;va">
+<meta name="twitter:image" content="http://yoursite.com/images/WechatIMG747.jpeg">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -69,23 +73,40 @@
   <time datetime="2017-12-30T15:17:28.000Z" itemprop="datePublished">2017-12-30</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于html兼容性的一些问题
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="title-First-Night"><a href="#title-First-Night" class="headerlink" title=" title: First Night"></a> title: First Night</h2><blockquote>
-<p>我有一头<strong>小毛驴</strong>，可是我从来都不骑。</p>
-</blockquote>
+        <h3 id="1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。"><a href="#1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。" class="headerlink" title="1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。"></a>1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。</h3><h4 id="解决方案就是给img标签加个包裹的盒子，例如div标签。"><a href="#解决方案就是给img标签加个包裹的盒子，例如div标签。" class="headerlink" title="#解决方案就是给img标签加个包裹的盒子，例如div标签。"></a>#解决方案就是给img标签加个包裹的盒子，例如div标签。</h4><img src="/images/WechatIMG747.jpeg" width="200" height="400">
+<h3 id="2、iOS11下，fixed布局里input输入框光标乱动的情况。"><a href="#2、iOS11下，fixed布局里input输入框光标乱动的情况。" class="headerlink" title="2、iOS11下，fixed布局里input输入框光标乱动的情况。"></a>2、iOS11下，fixed布局里input输入框光标乱动的情况。</h3><img src="/images/WechatIMG567.jpeg" class="center" width="200" height="400">
+<h4 id="暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。"><a href="#暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。" class="headerlink" title="#暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。"></a>#暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var ver = null;</span><br><span class="line">var u = navigator.userAgent;</span><br><span class="line">var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端</span><br><span class="line"><span class="keyword">if</span> (ios) &#123;</span><br><span class="line">    ver = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);</span><br><span class="line">    ver = parseInt(ver[1], 10);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="改布局的时候也要设置弹窗的位置，top值为页面滚动的高度。"><a href="#改布局的时候也要设置弹窗的位置，top值为页面滚动的高度。" class="headerlink" title="#改布局的时候也要设置弹窗的位置，top值为页面滚动的高度。"></a>#改布局的时候也要设置弹窗的位置，top值为页面滚动的高度。</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getScrollTop</span></span>()&#123;</span><br><span class="line">    var scrollTop = 0;</span><br><span class="line">    <span class="keyword">if</span> (document.documentElement &amp;&amp; document.documentElement.scrollTop)&#123;</span><br><span class="line">        scrollTop = document.documentElement.scrollTop;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (document.body) &#123;</span><br><span class="line">        scrollTop = document.body.scrollTop;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> scrollTop;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="同时由于绝对定位的原因，这时候最好禁止掉页面的滚动事件"><a href="#同时由于绝对定位的原因，这时候最好禁止掉页面的滚动事件" class="headerlink" title="#同时由于绝对定位的原因，这时候最好禁止掉页面的滚动事件"></a>#同时由于绝对定位的原因，这时候最好禁止掉页面的滚动事件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//弹窗出现的时候，禁止滚动</span><br><span class="line">document.body.addEventListener(<span class="string">'touchmove'</span>, preventScroll())</span><br><span class="line"><span class="keyword">function</span> preventScroll(e)&#123;</span><br><span class="line">    e.preventDefault()</span><br><span class="line">&#125;</span><br><span class="line">//弹窗消失的时候，去掉禁止事件</span><br><span class="line">document.body.removeEventListener(<span class="string">'touchmove'</span>, preventScroll())</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/first/" data-id="cjbw8leie00006wsnnw9kq4xb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/first/" data-id="cjbw8omkq000084snvau8f8im" class="article-share-link">Teilen</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html-css/">html,css</a></li></ul>
+
     </footer>
   </div>
   
@@ -95,7 +116,7 @@
   
     <a href="/2017/12/30/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Älter</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">hexo使用介绍</div>
     </a>
   
 </nav>
@@ -108,12 +129,33 @@
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/html-css/">html,css</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/html-css/" style="font-size: 10px;">html,css</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -132,11 +174,11 @@
       <ul>
         
           <li>
-            <a href="/2017/12/30/first/">(no title)</a>
+            <a href="/2017/12/30/first/">关于html兼容性的一些问题</a>
           </li>
         
           <li>
-            <a href="/2017/12/30/hello-world/">Hello World</a>
+            <a href="/2017/12/30/hello-world/">hexo使用介绍</a>
           </li>
         
       </ul>
