@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>网页性能监控 | lebron</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前端网站的性能监控，主要是为了监控网站的访问数据，然后根据上报的情况进行一些优化，我整理了一下资料大概可以获取的资料是以下几点：  白屏时间 首屏时间 用户可交互时间 ajax性能 js错误 CDN耗时和资源监控 其他的一些，例如，浏览器、系统、ip、运营商等数据  这些数据之中，首先我们获取的应该就是用户加载页面耗时的一些情况，通过Performance API我们可以获取浏览器的一些数据，ch">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网页性能监控">
+<meta property="og:url" content="http://yoursite.com/2018/01/30/page/index.html">
+<meta property="og:site_name" content="lebron">
+<meta property="og:description" content="前端网站的性能监控，主要是为了监控网站的访问数据，然后根据上报的情况进行一些优化，我整理了一下资料大概可以获取的资料是以下几点：  白屏时间 首屏时间 用户可交互时间 ajax性能 js错误 CDN耗时和资源监控 其他的一些，例如，浏览器、系统、ip、运营商等数据  这些数据之中，首先我们获取的应该就是用户加载页面耗时的一些情况，通过Performance API我们可以获取浏览器的一些数据，ch">
+<meta property="og:updated_time" content="2018-01-30T14:55:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网页性能监控">
+<meta name="twitter:description" content="前端网站的性能监控，主要是为了监控网站的访问数据，然后根据上报的情况进行一些优化，我整理了一下资料大概可以获取的资料是以下几点：  白屏时间 首屏时间 用户可交互时间 ajax性能 js错误 CDN耗时和资源监控 其他的一些，例如，浏览器、系统、ip、运营商等数据  这些数据之中，首先我们获取的应该就是用户加载页面耗时的一些情况，通过Performance API我们可以获取浏览器的一些数据，ch">
+  
+    <link rel="alternate" href="/atom.xml" title="lebron" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://pic.8pig.com/avatar/u_94/633694/fcddab0c421aabc21d390fa75a77cb30.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lebron</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-page" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/30/page/" class="article-date">
+  <time datetime="2018-01-30T14:14:29.000Z" itemprop="datePublished">2018-01-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      网页性能监控
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前端网站的性能监控，主要是为了监控网站的访问数据，然后根据上报的情况进行一些优化，我整理了一下资料大概可以获取的资料是以下几点：</p>
+<ul>
+<li>白屏时间</li>
+<li>首屏时间</li>
+<li>用户可交互时间</li>
+<li>ajax性能</li>
+<li>js错误</li>
+<li>CDN耗时和资源监控</li>
+<li>其他的一些，例如，浏览器、系统、ip、运营商等数据</li>
+</ul>
+<p>这些数据之中，首先我们获取的应该就是用户加载页面耗时的一些情况，通过<a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a>我们可以获取浏览器的一些数据，chrome控制台输出的Load和DOMContentLoaded就是我们需要的下载时间和用户可交互时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const openTime = performance.timing.navigationStart</span><br><span class="line">const whiteScreenTime = +new Date() - openTime</span><br><span class="line">let readyTime = 0</span><br><span class="line">document.addEventListener(&apos;DOMContentLoaded&apos;,function () &#123;</span><br><span class="line">    readyTime = +new Date() - openTime</span><br><span class="line">&#125;)</span><br><span class="line">window.onload = function () &#123;</span><br><span class="line">    const loadTime = +new Date() - openTime;</span><br><span class="line">    console.log(`白屏时间$&#123;whiteScreenTime&#125;ms`)</span><br><span class="line">    console.log(`用户可交互时间$&#123;readyTime&#125;ms`)</span><br><span class="line">    console.log(`资源下载时间$&#123;loadTime&#125;ms`)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a>中还有一个<a href="http://javascript.ruanyifeng.com/bom/performance.html#toc3" target="_blank" rel="noopener">performance.getEntries()</a>方法，该方法可以得到网页请求的脚本文件、样式表的所有信息，通过这些我们可以知道页面请求了哪些资源，以及请求的时间等一些参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window.performance.getEntries().forEach(function (item) &#123;</span><br><span class="line">    console.log(`$&#123;item.name&#125;请求时间：$&#123;item.duration&#125;ms`)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>页面错误上报的情况还在整理中，晚点再补充。。。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/30/page/" data-id="cjd1rn2lt0005n5sn6wvxnf8p" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/30/first/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于html兼容性的一些问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/js/" style="font-size: 10px;">js</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/30/page/">网页性能监控</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/30/first/">关于html兼容性的一些问题</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/30/hello-world/">hexo使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 lebron<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

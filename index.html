@@ -55,6 +55,62 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-page" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/30/page/" class="article-date">
+  <time datetime="2018-01-30T14:14:29.000Z" itemprop="datePublished">2018-01-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/30/page/">网页性能监控</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前端网站的性能监控，主要是为了监控网站的访问数据，然后根据上报的情况进行一些优化，我整理了一下资料大概可以获取的资料是以下几点：</p>
+<ul>
+<li>白屏时间</li>
+<li>首屏时间</li>
+<li>用户可交互时间</li>
+<li>ajax性能</li>
+<li>js错误</li>
+<li>CDN耗时和资源监控</li>
+<li>其他的一些，例如，浏览器、系统、ip、运营商等数据</li>
+</ul>
+<p>这些数据之中，首先我们获取的应该就是用户加载页面耗时的一些情况，通过<a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a>我们可以获取浏览器的一些数据，chrome控制台输出的Load和DOMContentLoaded就是我们需要的下载时间和用户可交互时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const openTime = performance.timing.navigationStart</span><br><span class="line">const whiteScreenTime = +new Date() - openTime</span><br><span class="line">let readyTime = 0</span><br><span class="line">document.addEventListener(&apos;DOMContentLoaded&apos;,function () &#123;</span><br><span class="line">    readyTime = +new Date() - openTime</span><br><span class="line">&#125;)</span><br><span class="line">window.onload = function () &#123;</span><br><span class="line">    const loadTime = +new Date() - openTime;</span><br><span class="line">    console.log(`白屏时间$&#123;whiteScreenTime&#125;ms`)</span><br><span class="line">    console.log(`用户可交互时间$&#123;readyTime&#125;ms`)</span><br><span class="line">    console.log(`资源下载时间$&#123;loadTime&#125;ms`)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a>中还有一个<a href="http://javascript.ruanyifeng.com/bom/performance.html#toc3" target="_blank" rel="noopener">performance.getEntries()</a>方法，该方法可以得到网页请求的脚本文件、样式表的所有信息，通过这些我们可以知道页面请求了哪些资源，以及请求的时间等一些参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window.performance.getEntries().forEach(function (item) &#123;</span><br><span class="line">    console.log(`$&#123;item.name&#125;请求时间：$&#123;item.duration&#125;ms`)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>页面错误上报的情况还在整理中，晚点再补充。。。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/30/page/" data-id="cjd1rn2lt0005n5sn6wvxnf8p" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-first" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/30/first/" class="article-date">
@@ -90,10 +146,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/first/" data-id="cjbw9d99f0001evsnknqu41gj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/first/" data-id="cjd1rn2l70000n5snscrzk1pq" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html-css/">html,css</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
 
     </footer>
   </div>
@@ -137,7 +193,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/hello-world/" data-id="cjbw9d9980000evsndrp68n05" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/hello-world/" data-id="cjd1rn2lu0006n5sn03fxppd4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -155,9 +211,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Kategorien</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li></ul>
     </div>
   </div>
 
@@ -167,7 +223,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/html-css/">html,css</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a></li></ul>
     </div>
   </div>
 
@@ -177,16 +233,16 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/html-css/" style="font-size: 10px;">html,css</a>
+      <a href="/tags/css/" style="font-size: 10px;">css</a> <a href="/tags/js/" style="font-size: 10px;">js</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
     </div>
   </div>
 
@@ -194,9 +250,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/01/30/page/">网页性能监控</a>
+          </li>
         
           <li>
             <a href="/2017/12/30/first/">关于html兼容性的一些问题</a>
