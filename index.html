@@ -81,13 +81,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前端网站的性能监控，主要是为了监控网站的访问数据，然后根据上报的情况进行一些优化，整理了一下资料可以监控的数据可分为记录型监控和捕捉型监控。</p>
-<p>记录型监控</p>
+        <p>网站的性能监控，可以监控网站的访问数据，然后进行上报，这样我们就能对症下药更好的优化我们的前端性能。</p>
+<h3 id="一、思路"><a href="#一、思路" class="headerlink" title="一、思路"></a>一、思路</h3><ul>
+<li>确定我们需要监控的数据</li>
+<li>收集数据</li>
+<li>进行上报</li>
+<li>数据整理展示</li>
+<li>优化</li>
+</ul>
+<h3 id="二、具体方案"><a href="#二、具体方案" class="headerlink" title="二、具体方案"></a>二、具体方案</h3><h4 id="1、需要监控的数据大致可分为记录型监控和捕捉型监控两种"><a href="#1、需要监控的数据大致可分为记录型监控和捕捉型监控两种" class="headerlink" title="1、需要监控的数据大致可分为记录型监控和捕捉型监控两种"></a>1、需要监控的数据大致可分为记录型监控和捕捉型监控两种</h4><p>记录型监控</p>
 <ul>
 <li>白屏时间</li>
 <li>首屏时间</li>
 <li>用户可交互时间</li>
-<li>CDN耗时和资源监控</li>
+<li>解析 DOM 树结构的时间</li>
+<li>CDN耗时</li>
 <li>其他的一些，例如，浏览器、系统、ip、运营商等数据</li>
 </ul>
 <p>捕捉型监控</p>
@@ -99,10 +107,14 @@
 <li>内部逻辑错误</li>
 <li>接口错误</li>
 </ul>
-<p>这些数据之中，首先我们获取的应该就是用户加载页面耗时的一些情况，通过<a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a>我们可以获取浏览器的一些数据，chrome控制台输出的Load和DOMContentLoaded就是我们需要的下载时间和用户可交互时间。</p>
+<h4 id="2、收集"><a href="#2、收集" class="headerlink" title="2、收集"></a>2、收集</h4><p>通过引入js进行收集，然后对数据进行汇总整理，进行上报</p>
+<h4 id="3、上报"><a href="#3、上报" class="headerlink" title="3、上报"></a>3、上报</h4><p>收集的数据和错误通过接口向后台发送，同时也要注意一些事情，比如说，数据是否有采集，或者错误一直在不断的触发，我们需要针对性的上报我们的数据</p>
+<h4 id="4、数据展示"><a href="#4、数据展示" class="headerlink" title="4、数据展示"></a>4、数据展示</h4><p>前端可以弄一个图表类型的网页，对上报的数据展示，类似于oneapm</p>
+<h4 id="5、优化"><a href="#5、优化" class="headerlink" title="5、优化"></a>5、优化</h4><p>就是针对错误日志和监控的数据进行针对性的处理，然后再继续监控优化后的结果</p>
+<h3 id="三、实施"><a href="#三、实施" class="headerlink" title="三、实施"></a>三、实施</h3><p>这些数据之中，首先我们可以获取就是用户加载页面耗时的一些情况，通过<a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a>我们可以获取浏览器的一些数据，chrome控制台输出的Load和DOMContentLoaded就是我们需要的下载时间和用户可交互时间。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const openTime = performance.timing.navigationStart</span><br><span class="line">const whiteScreenTime = +new Date() - openTime</span><br><span class="line">let readyTime = 0</span><br><span class="line">document.addEventListener(&apos;DOMContentLoaded&apos;,function () &#123;</span><br><span class="line">    readyTime = +new Date() - openTime</span><br><span class="line">&#125;)</span><br><span class="line">window.onload = function () &#123;</span><br><span class="line">    const loadTime = +new Date() - openTime;</span><br><span class="line">    console.log(`白屏时间$&#123;whiteScreenTime&#125;ms`)</span><br><span class="line">    console.log(`用户可交互时间$&#123;readyTime&#125;ms`)</span><br><span class="line">    console.log(`资源下载时间$&#123;loadTime&#125;ms`)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a>中还有一个<a href="http://javascript.ruanyifeng.com/bom/performance.html#toc3" target="_blank" rel="noopener">performance.getEntries()</a>方法，该方法可以得到网页请求的脚本文件、样式表的所有信息，通过这些我们可以知道页面请求了哪些资源，以及请求的时间等一些参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window.performance.getEntries().forEach(function (item) &#123;</span><br><span class="line">    console.log(`$&#123;item.name&#125;请求时间：$&#123;item.duration&#125;ms`)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>页面错误上报的情况还在整理中，晚点再补充。。。</p>
+<p>页面错误的可以通过window.onerror收集<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const txt=&quot;&quot;</span><br><span class="line">window.onerror = function(msg, url, row) &#123;</span><br><span class="line">    txt = &quot;本页中存在错误。\n\n&quot;</span><br><span class="line">    txt += &quot;错误：&quot; + msg + &quot;\n&quot;</span><br><span class="line">    txt += &quot;URL: &quot; + url + &quot;\n&quot;</span><br><span class="line">    txt += &quot;行：&quot; + row + &quot;\n\n&quot;</span><br><span class="line">    console.log(txt)</span><br><span class="line">    return true</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
 <li><a href="https://tech.meituan.com/hunt-sdk-practice.html" target="_blank" rel="noopener">监控平台前端SDK开发实践</a></li>
 <li><a href="http://www.open-open.com/lib/view/open1414631044559.html" target="_blank" rel="noopener">美团性能分析框架和性能监控平台</a></li>
@@ -111,12 +123,13 @@
 <li><a href="https://www.zhihu.com/question/23212408" target="_blank" rel="noopener">如何计算首屏加载时间？</a></li>
 <li><a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a></li>
 <li><a href="https://www.cnblogs.com/chuaWeb/p/PerformanceMonitoring.html" target="_blank" rel="noopener">前端性能——监控起步</a></li>
+<li><a href="http://www.alloyteam.com/2015/09/explore-performance/" target="_blank" rel="noopener">初探 performance – 监控网页与程序性能</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/30/page/" data-id="cjd75y4pf0000czsngp9gzzd3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/30/page/" data-id="cjdbcaycr0001tysnaxlw9vlz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
@@ -163,7 +176,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/first/" data-id="cjd75y4pp0004czsn86uigtfj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/first/" data-id="cjdbcayci0000tysnpjcn7kwi" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
@@ -210,7 +223,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/hello-world/" data-id="cjd75y4pj0001czsn6gb07kbx" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/hello-world/" data-id="cjdbcayd00004tysnfp2m0k61" class="article-share-link">Teilen</a>
       
       
     </footer>
