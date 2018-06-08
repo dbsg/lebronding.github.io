@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>lebron</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="lebron">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="lebron">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lebron">
+  
+    <link rel="alternate" href="/atom.xml" title="lebron" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://pic.8pig.com/avatar/u_94/633694/fcddab0c421aabc21d390fa75a77cb30.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lebron</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-mongoose" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/01/mongoose/" class="article-date">
+  <time datetime="2018-03-01T13:20:17.000Z" itemprop="datePublished">2018-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/01/mongoose/">mongoose</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天做了一下mongoDB的数据连接和上报操作，由于之前不熟悉导致做了很久才完成，这里总结一下，今天的收获。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 在服务器连接mongo</span><br><span class="line">mongo 127.0.0.1:port -u user -p pwd</span><br><span class="line">// 查看所有的数据库</span><br><span class="line">show dbs</span><br><span class="line">// 新建一个我们需要用到的数据库</span><br><span class="line">use test</span><br><span class="line">// 给数据库添加一个用户</span><br><span class="line">db.createUser(</span><br><span class="line">   &#123;</span><br><span class="line">     user: &quot;accountUser&quot;,</span><br><span class="line">     pwd: &quot;password&quot;,</span><br><span class="line">     roles: [ &quot;readWrite&quot;, &quot;dbAdmin&quot; ]</span><br><span class="line">   &#125;</span><br><span class="line">)</span><br><span class="line">// 然后连接到这个数据库</span><br><span class="line">mongo 127.0.0.1:port/test -u accountUser -p password</span><br><span class="line">// 查看所有集合</span><br><span class="line">show collections</span><br></pre></td></tr></table></figure>
+<p>然后我们就可以在本地连接mongo，给他添加集合，这次用的是mongoose<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 安装mongoose</span><br><span class="line">npm install mongoose</span><br><span class="line">// 然后连接mongo</span><br><span class="line">const mongoose = require(&apos;mongoose&apos;)</span><br><span class="line">mongoose.connect(&apos;mongodb://localhost/test&apos;)</span><br><span class="line"></span><br><span class="line">// 如果需要验证可以在地址前面加上用户名和密码，地址后面可以添加配置的参数</span><br><span class="line">mongoose.connect(&apos;mongodb://username:password@localhost:port/test?options...&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>但有时候会遇到用户名或者密码有@字符的情况，如果这样，可以自己配置一个options对象，然后进行连接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const options = &#123;</span><br><span class="line">    user: username,</span><br><span class="line">    pass: password</span><br><span class="line">&#125;</span><br><span class="line">mongoose.connect(&apos;mongodb://localhost:port/test&apos;， options)</span><br></pre></td></tr></table></figure></p>
+<p>mongo的options也可以添加其他的一些参数，具体如下</p>
+<ul>
+<li><p>bufferCommands - This is a mongoose-specific option (not passed to the MongoDB driver) that disables mongoose’s buffering mechanism</p>
+</li>
+<li><p>user/pass - The username and password for authentication. These options are mongoose-specific, they are equivalent to the MongoDB driver’s auth.user and auth.password options.</p>
+</li>
+<li><p>autoIndex - By default, mongoose will automatically build indexes defined in your schema when it connects. This is great for development, but not ideal for large production deployments, because index builds can cause performance degradation. If you set autoIndex to false, mongoose will not automatically build indexes for any model associated with this connection.</p>
+</li>
+<li><p>autoReconnect - The underlying MongoDB driver will automatically try to reconnect when it loses connection to MongoDB. Unless you are an extremely advanced user that wants to manage their own connection pool, do not set this option to false.</p>
+</li>
+<li><p>reconnectTries - If you’re connected to a single server or mongos proxy (as opposed to a replica set), the MongoDB driver will try to reconnect every reconnectInterval milliseconds for reconnectTries times, and give up afterward. When the driver gives up, the mongoose connection emits a reconnectFailed event. This option does nothing for replica set connections.</p>
+</li>
+<li><p>reconnectInterval - See reconnectTries</p>
+</li>
+<li><p>promiseLibrary - sets the underlying driver’s promise library</p>
+</li>
+<li><p>poolSize - The maximum number of sockets the MongoDB driver will keep open for this connection. By default, poolSize is 5. Keep in mind that, as of MongoDB 3.4, MongoDB only allows one operation per socket at a time, so you may want to increase this if you find you have a few slow queries that are blocking faster queries from proceeding.</p>
+</li>
+<li><p>bufferMaxEntries - The MongoDB driver also has its own buffering mechanism that kicks in when the driver is disconnected. Set this option to 0 and set bufferCommands to false on your schemas if you want your database operations to fail immediately when the driver is not connected, as opposed to waiting for reconnection.</p>
+</li>
+</ul>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const options = &#123;</span><br><span class="line">  useMongoClient: true,</span><br><span class="line">  autoIndex: false, // Don&apos;t build indexes</span><br><span class="line">  reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect</span><br><span class="line">  reconnectInterval: 500, // Reconnect every 500ms</span><br><span class="line">  poolSize: 10, // Maintain up to 10 socket connections</span><br><span class="line">  // If not connected, return errors immediately rather than waiting for reconnect</span><br><span class="line">  bufferMaxEntries: 0</span><br><span class="line">&#125;;</span><br><span class="line">mongoose.connect(uri, options);</span><br></pre></td></tr></table></figure></p>
+<p>连接上mongoDB之后就可以进行数据库常规的增删改查操作了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 增</span><br><span class="line">// 1、定义一个Schema</span><br><span class="line">const mongoose = require(&apos;mongoose&apos;);</span><br><span class="line">const Schema = mongoose.Schema;</span><br><span class="line">const blogSchema = new Schema(&#123;</span><br><span class="line">  title:  String,</span><br><span class="line">  author: String,</span><br><span class="line">&#125;);</span><br><span class="line">// 可以定义的类型有以下几种</span><br><span class="line">- String</span><br><span class="line">- Number</span><br><span class="line">- Date</span><br><span class="line">- Buffer</span><br><span class="line">- Boolean</span><br><span class="line">- Mixed</span><br><span class="line">- ObjectId</span><br><span class="line">- Array</span><br><span class="line">// 2、创建一个model</span><br><span class="line">const Blog = mongoose.model(&apos;Blog&apos;, blogSchema);</span><br><span class="line">// 3、创建一个document</span><br><span class="line">const lebronBlog = new Blog(&#123;title: &apos;blog&apos;, author: &apos;lebron&apos;&#125;)</span><br><span class="line">// 4、保存</span><br><span class="line">lebronBlog.save()</span><br></pre></td></tr></table></figure></p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
+<li><a href="http://blog.csdn.net/qq_27093465/article/details/51700435" target="_blank" rel="noopener"> mongo数据库的各种查询语句示例</a></li>
+<li><a href="http://mongoosejs.com/" target="_blank" rel="noopener">mongoose</a></li>
+<li><a href="https://docs.mongodb.com/manual/reference/method/db.createUser/" target="_blank" rel="noopener">mongoDB</a></li>
+<li><a href="https://github.com/Automattic/mongoose/" target="_blank" rel="noopener">mongoose github</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/01/mongoose/" data-id="cji5kujbi000l92snv3iqg7j7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongo/">mongo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-js学习网站" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/js学习网站/" class="article-date">
+  <time datetime="2018-02-27T09:04:36.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/27/js学习网站/">js学习网站</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://javascript.ruanyifeng.com/" target="_blank" rel="noopener">JavaScript 标准参考教程</a><br><a href="http://ife.baidu.com/" target="_blank" rel="noopener">百度前端技术学院</a><br><a href="http://nginxtutorial.rails365.net/467009" target="_blank" rel="noopener">nginx教程</a><br><a href="http://taobaofed.org/" target="_blank" rel="noopener">淘宝前端团队（FED）</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/js学习网站/" data-id="cji5kujas000792sn93tipl7i" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-浏览器点击复制功能" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/浏览器点击复制功能/" class="article-date">
+  <time datetime="2018-02-27T07:58:42.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/27/浏览器点击复制功能/">浏览器点击复制功能</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近遇到安卓微信浏览器长按不能复制的问题，想着弄一下点击复制的功能，找到了一个api(<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document/execCommand" target="_blank" rel="noopener">document.execCommand</a>)，试着写了个demo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input id=&quot;copy&quot; value=&quot;123&quot; /&gt;</span><br><span class="line">&lt;input type=&quot;button&quot; onClick=&quot;copy()&quot; value=&quot;点击复制代码&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    function copy() &#123;</span><br><span class="line">        var dom = document.getElementById(&quot;copy&quot;);</span><br><span class="line">        dom.select();</span><br><span class="line">        document.execCommand(&quot;Copy&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>但document.execCommand有局限性，根据api的解释，该方法允许运行命令来操纵可编辑区域的内容。所以只有input，textarea等标签才能使用。所以在网上又找了个js(<a href="https://clipboardjs.com/" target="_blank" rel="noopener">clipboardjs</a>)，试了一下效果不错。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;test-area&quot;&gt;</span><br><span class="line">    &lt;p id=&quot;copy&quot;&gt;123&lt;/p&gt;</span><br><span class="line">    &lt;button id=&quot;copyCode&quot; class=&quot;btn&quot; data-clipboard-target=&quot;#copy&quot; data-clipboard-action=&quot;copy&quot;&gt;</span><br><span class="line">        复制</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../clipboard.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    const clipboard = new Clipboard(&apos;.btn&apos;);</span><br><span class="line">    clipboard.on(&apos;success&apos;, function(e)&#123;</span><br><span class="line">        console.log(e);</span><br><span class="line">        document.getElementById(&apos;copyCode&apos;).innerHTML = &apos;复制成功&apos;;</span><br><span class="line">    &#125;);</span><br><span class="line">    clipboard.on(&apos;error&apos;, function(e)&#123;</span><br><span class="line">        document.getElementById(&apos;copyCode&apos;).innerHTML = &apos;复制失败，请长按复制&apos;;</span><br><span class="line">    &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/浏览器点击复制功能/" data-id="cji5kujbw000y92sne5p53f8q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-js邪门歪道" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/js邪门歪道/" class="article-date">
+  <time datetime="2018-02-27T06:27:35.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/27/js邪门歪道/">js邪门歪道</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>// eslint-disable-line 在代码后面加上这句注释，就能躲过eslint的检查。</p>
+</li>
+<li><p>根据所选择的开始日期与结束日期列出之间每天的日期。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var start = &apos;2017-02-01&apos;;  </span><br><span class="line">var end = &apos;2017-03-01&apos;;  </span><br><span class="line">var startDate = new Date(start),endDate = new Date(end);  </span><br><span class="line">var startTime = startDate.getTime(), endTime = endDate.getTime(),duringTime = endTime - startTime;  </span><br><span class="line">var arr = [];  </span><br><span class="line">for(var i=0; i&lt;= duringTime; i += 86400000)&#123;  </span><br><span class="line">    var date = new Date(startTime + i);  </span><br><span class="line">    arr.push(date.getFullYear() + &apos;-&apos; + (date.getMonth()+1)+&apos;-&apos;+date.getDate())  </span><br><span class="line">&#125;  </span><br><span class="line">console.log(arr);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除数组中的重复元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">// 第一种</span><br><span class="line">const arr = [1,1,1,2,3,4,4,4,2,3,5,4];</span><br><span class="line">const result = Array.from(new Set(arr));  </span><br><span class="line">console.log(result);</span><br><span class="line">// 第二种</span><br><span class="line">const arr = [1,1,1,2,3,4,4,4,2,3,5,4];</span><br><span class="line">const map = arr.reduce((m, x) =&gt; m.set(x, (m.get(x) || 0) + 1), new Map())</span><br><span class="line">const newArr = Array.from(map.keys())</span><br><span class="line">console.log(newArr);</span><br><span class="line">// 每个元素的重复次数</span><br><span class="line">Array.from(map.values())</span><br><span class="line">// 根据下标获取某个元素的次数</span><br><span class="line">map.get(newArr[0])</span><br><span class="line"></span><br><span class="line">// 上面数组的元素都是数字，如果元素是对象或者给一个json数据去重，就不行，例如下面这个数组</span><br><span class="line">const arr = [&#123;name: 123, count: 1&#125;, &#123;name:123, count: 1&#125;, &#123;name:456, count: 1&#125;, &#123;name:123, count: 1&#125;];</span><br><span class="line">// 这样的数组可以用下面这个方法</span><br><span class="line">function getArr (list) &#123;</span><br><span class="line">    var arr = [];</span><br><span class="line">    for (var i = 0; i &lt; list.length; i++) &#123;</span><br><span class="line">        if (i == 0) arr.push(list[i]);</span><br><span class="line">        let b = false;</span><br><span class="line">        if (arr.length &gt; 0 &amp;&amp; i &gt; 0) &#123;</span><br><span class="line">        for (var j = 0; j &lt; arr.length; j++) &#123;</span><br><span class="line">            if (arr[j].name == list[i].name) &#123;</span><br><span class="line">            arr[j].count += 1</span><br><span class="line">            b = true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (!b) &#123;</span><br><span class="line">            arr.push(list[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return arr;</span><br><span class="line">&#125;</span><br><span class="line">console.log(getArr(arr))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="https://segmentfault.com/q/1010000011588667" target="_blank" rel="noopener"></a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/js邪门歪道/" data-id="cji5kujbb000g92snpa7rve3l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/eslint/">eslint</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-js模块化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/24/js模块化/" class="article-date">
+  <time datetime="2018-02-24T10:35:45.000Z" itemprop="datePublished">2018-02-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/24/js模块化/">js模块化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通用的解决方案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">(function (root, factory) &#123;</span><br><span class="line">  if (typeof define === &apos;function&apos; &amp;&amp; define.amd) &#123;</span><br><span class="line">    define(factory);</span><br><span class="line">  &#125; else if (typeof exports === &apos;object&apos;) &#123;</span><br><span class="line">    module.exports = factory;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    root.MYMODULE = factory();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(this, function () &#123;</span><br><span class="line">  // </span><br><span class="line">&#125;);</span><br><span class="line">// UMD模块定义</span><br><span class="line">(function (root, factory) &#123;</span><br><span class="line">    if (typeof define === &apos;function&apos; &amp;&amp; define.amd) &#123;</span><br><span class="line">        // AMD. Register as an anonymous module.</span><br><span class="line">        define([&apos;b&apos;], factory);</span><br><span class="line">    &#125; else if (typeof module === &apos;object&apos; &amp;&amp; module.exports) &#123;</span><br><span class="line">        // Node. Does not work with strict CommonJS, but</span><br><span class="line">        // only CommonJS-like environments that support module.exports,</span><br><span class="line">        // like Node.</span><br><span class="line">        module.exports = factory(require(&apos;b&apos;));</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // Browser globals (root is window)</span><br><span class="line">        root.returnExports = factory(root.b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;(this, function (b) &#123;</span><br><span class="line">    //use b in some fashion.</span><br><span class="line"></span><br><span class="line">    // Just return a value to define the module export.</span><br><span class="line">    // This example returns an object, but the module</span><br><span class="line">    // can return a function as the exported value.</span><br><span class="line">    return &#123;&#125;;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://my.oschina.net/chenzhiqiang/blog/129783" target="_blank" rel="noopener">JavaScript 模块化编程 - Module Pattern</a></li>
+</ul>
+<ul>
+<li>(<a href="https://toddmotto.com/what-function-window-document-undefined-iife-really-means/#non-browser-global-environments" target="_blank" rel="noopener">https://toddmotto.com/what-function-window-document-undefined-iife-really-means/#non-browser-global-environments</a>)</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/24/js模块化/" data-id="cji5kujb2000892snowynnpsx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-page" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/30/page/" class="article-date">
+  <time datetime="2018-01-30T14:14:29.000Z" itemprop="datePublished">2018-01-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/30/page/">网页性能监控</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、意义"><a href="#一、意义" class="headerlink" title="一、意义"></a>一、意义</h3><p>前端网页运行的一些情况，在开发和测试的时候就能得到一些基本的数据和修复大部分的bug，但限于测试覆盖的范围有限，以及测试经验上的一些欠缺，经常会有一些异常的问题是我们平时发现不了的，而大部分用户是不会主动上报他们遇到的问题，基本上都选择直接关掉网页，这对我们来说是很致命的，所以网站的监控就很有必要了。它能收集我们需要的数据，从而能够知道我们哪里做的不好，哪里出现了问题，就能很清楚的找到我们需要优化的地方。</p>
+<h3 id="二、思路"><a href="#二、思路" class="headerlink" title="二、思路"></a>二、思路</h3><ul>
+<li>确定我们需要监控的数据</li>
+<li>收集数据</li>
+<li>进行上报</li>
+<li>数据整理展示</li>
+<li>优化</li>
+</ul>
+<p>具体流程如下</p>
+<div id="flowchart-0" class="flow-chart"></div>
+
+<h3 id="三、具体方案"><a href="#三、具体方案" class="headerlink" title="三、具体方案"></a>三、具体方案</h3><h4 id="1、需要监控的数据大致可分为记录型监控和捕捉型监控两种"><a href="#1、需要监控的数据大致可分为记录型监控和捕捉型监控两种" class="headerlink" title="1、需要监控的数据大致可分为记录型监控和捕捉型监控两种"></a>1、需要监控的数据大致可分为记录型监控和捕捉型监控两种</h4><p>记录型监控</p>
+<ul>
+<li>白屏时间</li>
+<li>首屏时间</li>
+<li>用户可交互时间</li>
+<li>解析 DOM 树结构的时间</li>
+<li>CDN耗时</li>
+<li>其他的一些，例如，浏览器、系统、ip、运营商等数据</li>
+</ul>
+<p>捕捉型监控</p>
+<ul>
+<li>js错误</li>
+<li>document 资源加载错误</li>
+<li>资源加载错误：哪些资源加载失败了，为了捕获跨域JavaScript的错误，需要在相应资源标签上添加crossorigin属性。</li>
+<li>页面错误：页面渲染过程中出现的错误。(可以记录用户的referrer和url了解用户的操作流程)</li>
+<li>内部逻辑错误</li>
+<li>接口错误</li>
+</ul>
+<h4 id="2、收集"><a href="#2、收集" class="headerlink" title="2、收集"></a>2、收集</h4><p>通过引入js进行收集，然后对数据进行汇总整理，进行上报</p>
+<h4 id="3、上报"><a href="#3、上报" class="headerlink" title="3、上报"></a>3、上报</h4><p>收集的数据和错误通过接口向后台发送，同时也要注意一些事情，比如说，数据是否有采集，或者错误一直在不断的触发，我们需要针对性的上报我们的数据</p>
+<h4 id="4、数据展示"><a href="#4、数据展示" class="headerlink" title="4、数据展示"></a>4、数据展示</h4><p>前端可以弄一个图表类型的网页，对上报的数据展示</p>
+<h4 id="5、优化"><a href="#5、优化" class="headerlink" title="5、优化"></a>5、优化</h4><p>就是针对错误日志和监控的数据进行针对性的处理，然后再继续监控优化后的结果</p>
+<h3 id="四、实施"><a href="#四、实施" class="headerlink" title="四、实施"></a>四、实施</h3><p>这些数据之中，首先我们可以获取就是用户加载页面耗时的一些情况，通过<a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a>我们可以获取浏览器的一些数据，chrome控制台输出的Load和DOMContentLoaded就是我们需要的下载时间和用户可交互时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const openTime = performance.timing.navigationStart</span><br><span class="line">const whiteScreenTime = +new Date() - openTime</span><br><span class="line">let readyTime = 0</span><br><span class="line">document.addEventListener(&apos;DOMContentLoaded&apos;,function () &#123;</span><br><span class="line">    readyTime = +new Date() - openTime</span><br><span class="line">&#125;)</span><br><span class="line">window.onload = function () &#123;</span><br><span class="line">    const loadTime = +new Date() - openTime;</span><br><span class="line">    console.log(`白屏时间$&#123;whiteScreenTime&#125;ms`)</span><br><span class="line">    console.log(`用户可交互时间$&#123;readyTime&#125;ms`)</span><br><span class="line">    console.log(`资源下载时间$&#123;loadTime&#125;ms`)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a>中还有一个<a href="http://javascript.ruanyifeng.com/bom/performance.html#toc3" target="_blank" rel="noopener">performance.getEntries()</a>方法，该方法可以得到网页请求的脚本文件、样式表的所有信息，通过这些我们可以知道页面请求了哪些资源，以及请求的时间等一些参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window.performance.getEntries().forEach(function (item) &#123;</span><br><span class="line">    console.log(`$&#123;item.name&#125;请求时间：$&#123;item.duration&#125;ms`)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>页面错误的可以通过window.onerror收集<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const txt=&quot;&quot;</span><br><span class="line">window.onerror = function(msg, url, row) &#123;</span><br><span class="line">    txt = &quot;本页中存在错误。\n\n&quot;</span><br><span class="line">    txt += &quot;错误：&quot; + msg + &quot;\n&quot;</span><br><span class="line">    txt += &quot;URL: &quot; + url + &quot;\n&quot;</span><br><span class="line">    txt += &quot;行：&quot; + row + &quot;\n\n&quot;</span><br><span class="line">    console.log(txt)</span><br><span class="line">    return true</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a href="https://tech.meituan.com/hunt-sdk-practice.html" target="_blank" rel="noopener">监控平台前端SDK开发实践</a></li>
+<li><a href="http://www.open-open.com/lib/view/open1414631044559.html" target="_blank" rel="noopener">美团性能分析框架和性能监控平台</a></li>
+<li><a href="http://fex.baidu.com/blog/2014/05/build-performance-monitor-in-7-days/" target="_blank" rel="noopener">7 天打造前端性能监控系统</a></li>
+<li><a href="https://www.zhihu.com/question/37585246" target="_blank" rel="noopener">你是如何搭建 Web 前端性能监控系统的？</a></li>
+<li><a href="https://www.zhihu.com/question/23212408" target="_blank" rel="noopener">如何计算首屏加载时间？</a></li>
+<li><a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank" rel="noopener">Performance API</a></li>
+<li><a href="https://www.cnblogs.com/chuaWeb/p/PerformanceMonitoring.html" target="_blank" rel="noopener">前端性能——监控起步</a></li>
+<li><a href="http://www.alloyteam.com/2015/09/explore-performance/" target="_blank" rel="noopener">初探 performance – 监控网页与程序性能</a></li>
+<li><a href="http://chenbingshu.com/2016/%E5%88%9D%E6%8E%A2%E8%87%AA%E5%8A%A8%E6%8D%95%E8%8E%B7%E7%BD%91%E9%A1%B5%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8%E6%8A%A5%E9%94%99/" target="_blank" rel="noopener">初探自动捕获网页中的异常报错</a></li>
+<li><a href="https://developers.google.com/web/updates/2017/12/chrome-loadtimes-deprecated#startloadtime" target="_blank" rel="noopener">chrome.loadTimes() API</a></li>
+<li><a href="https://github.com/tjuking/performance-timing/blob/master/performance-timing.js" target="_blank" rel="noopener">github例子</a><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">op1=>operation: 前端页面
+op2=>operation: 引入js监控
+op3=>operation: 收集数据
+op4=>operation: 上报后台
+op5=>operation: 平台展示
+op6=>operation: 分析数据
+op6=>operation: 性能优化
+
+op1->op2->op3->op4->op5->op6->op3</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/30/page/" data-id="cji5kujbu000w92snibls78gl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-first" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/30/first/" class="article-date">
+  <time datetime="2017-12-30T15:17:28.000Z" itemprop="datePublished">2017-12-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/30/first/">关于html兼容性的一些问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。"><a href="#1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。" class="headerlink" title="1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。"></a>1、给图片一个border-radius让它显示成一个圆形，但是有时候会出现下面的情况。</h3><h4 id="解决方案就是给img标签加个包裹的盒子，例如div标签。"><a href="#解决方案就是给img标签加个包裹的盒子，例如div标签。" class="headerlink" title="#解决方案就是给img标签加个包裹的盒子，例如div标签。"></a>#解决方案就是给img标签加个包裹的盒子，例如div标签。</h4><img src="/images/WechatIMG747.jpeg" width="200" height="400">
+<h3 id="2、iOS11下，fixed布局里input输入框光标乱动的情况。"><a href="#2、iOS11下，fixed布局里input输入框光标乱动的情况。" class="headerlink" title="2、iOS11下，fixed布局里input输入框光标乱动的情况。"></a>2、iOS11下，fixed布局里input输入框光标乱动的情况。</h3><img src="/images/WechatIMG567.jpeg" class="center" width="200" height="400">
+<h4 id="暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。"><a href="#暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。" class="headerlink" title="#暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。"></a>#暂时的解决方法是判断一下环境和系统版本，把fixed布局改成absolute。</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var ver = null;</span><br><span class="line">var u = navigator.userAgent;</span><br><span class="line">var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端</span><br><span class="line"><span class="keyword">if</span> (ios) &#123;</span><br><span class="line">    ver = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);</span><br><span class="line">    ver = parseInt(ver[1], 10);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="改布局的时候也要设置弹窗的位置，top值为页面滚动的高度。"><a href="#改布局的时候也要设置弹窗的位置，top值为页面滚动的高度。" class="headerlink" title="#改布局的时候也要设置弹窗的位置，top值为页面滚动的高度。"></a>#改布局的时候也要设置弹窗的位置，top值为页面滚动的高度。</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">getScrollTop</span></span>()&#123;</span><br><span class="line">    var scrollTop = 0;</span><br><span class="line">    <span class="keyword">if</span> (document.documentElement &amp;&amp; document.documentElement.scrollTop)&#123;</span><br><span class="line">        scrollTop = document.documentElement.scrollTop;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (document.body) &#123;</span><br><span class="line">        scrollTop = document.body.scrollTop;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> scrollTop;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="同时由于绝对定位的原因，这时候最好禁止掉页面的滚动事件"><a href="#同时由于绝对定位的原因，这时候最好禁止掉页面的滚动事件" class="headerlink" title="#同时由于绝对定位的原因，这时候最好禁止掉页面的滚动事件"></a>#同时由于绝对定位的原因，这时候最好禁止掉页面的滚动事件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//弹窗出现的时候，禁止滚动</span><br><span class="line">document.body.addEventListener(<span class="string">'touchmove'</span>, preventScroll())</span><br><span class="line"><span class="keyword">function</span> preventScroll(e)&#123;</span><br><span class="line">    e.preventDefault()</span><br><span class="line">&#125;</span><br><span class="line">//弹窗消失的时候，去掉禁止事件</span><br><span class="line">document.body.removeEventListener(<span class="string">'touchmove'</span>, preventScroll())</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/30/first/" data-id="cji5kujam000492snvl26e22n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/30/hello-world/" class="article-date">
+  <time datetime="2017-12-30T15:00:56.000Z" itemprop="datePublished">2017-12-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/30/hello-world/">hexo使用介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/30/hello-world/" data-id="cji5kujao000592sn83lhs2it" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/echarts/">echarts</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/egg/">egg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eslint/">eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongo/">mongo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/04/26/mysql/">mysql</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/20/node文件目录/">node文件目录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/20/egg定时任务发送邮件/">egg定时任务发送邮件</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/02/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/21/js计算首屏图片/">js计算首屏图片</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 lebron<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

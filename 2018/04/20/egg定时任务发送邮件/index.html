@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>egg定时任务发送邮件 | lebron</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="egg定时任务会在app/schedule目录下，项目启动时就会开始执行。 定时任务可以这样写123456789101112131415161718192021const Subscription = require(&amp;apos;egg&amp;apos;).Subscription;class UpdateCache extends Subscription &amp;#123;  // 通过 schedule">
+<meta name="keywords" content="js,egg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="egg定时任务发送邮件">
+<meta property="og:url" content="http://yoursite.com/2018/04/20/egg定时任务发送邮件/index.html">
+<meta property="og:site_name" content="lebron">
+<meta property="og:description" content="egg定时任务会在app/schedule目录下，项目启动时就会开始执行。 定时任务可以这样写123456789101112131415161718192021const Subscription = require(&amp;apos;egg&amp;apos;).Subscription;class UpdateCache extends Subscription &amp;#123;  // 通过 schedule">
+<meta property="og:updated_time" content="2018-04-20T08:28:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="egg定时任务发送邮件">
+<meta name="twitter:description" content="egg定时任务会在app/schedule目录下，项目启动时就会开始执行。 定时任务可以这样写123456789101112131415161718192021const Subscription = require(&amp;apos;egg&amp;apos;).Subscription;class UpdateCache extends Subscription &amp;#123;  // 通过 schedule">
+  
+    <link rel="alternate" href="/atom.xml" title="lebron" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://pic.8pig.com/avatar/u_94/633694/fcddab0c421aabc21d390fa75a77cb30.jpg">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">lebron</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-egg定时任务发送邮件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/20/egg定时任务发送邮件/" class="article-date">
+  <time datetime="2018-04-20T08:08:04.000Z" itemprop="datePublished">2018-04-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      egg定时任务发送邮件
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://eggjs.org/zh-cn/basics/schedule.html" target="_blank" rel="noopener">egg定时任务</a>会在app/schedule目录下，项目启动时就会开始执行。</p>
+<p>定时任务可以这样写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const Subscription = require(&apos;egg&apos;).Subscription;</span><br><span class="line"></span><br><span class="line">class UpdateCache extends Subscription &#123;</span><br><span class="line">  // 通过 schedule 属性来设置定时任务的执行间隔等配置</span><br><span class="line">  static get schedule() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      cron: &apos;0 0 11 * * *&apos;, // 通过cron表达式设置触发时间，例如每天11点发送</span><br><span class="line">      interval: &apos;1m&apos;, // 1 分钟间隔</span><br><span class="line">      type: &apos;all&apos;, // 指定所有的 worker 都需要执行</span><br><span class="line">      type: &apos;worker&apos;, // 每台机器上只有一个 worker 会执行这个定时任务</span><br><span class="line">      disable: process.env.NODE_ENV !== &apos;production&apos; // 根据环境判断是否启动任务</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // subscribe 是真正定时任务执行时被运行的函数</span><br><span class="line">  async subscribe() &#123;</span><br><span class="line">   // do something</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = UpdateCache;</span><br></pre></td></tr></table></figure></p>
+<p>也可以简写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  schedule: &#123;</span><br><span class="line">    interval: &apos;1m&apos;, // 1 分钟间隔</span><br><span class="line">    type: &apos;all&apos;, // 指定所有的 worker 都需要执行</span><br><span class="line">  &#125;,</span><br><span class="line">  async task(ctx) &#123;</span><br><span class="line">    // do something</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>发送邮件用到的是<a href="https://nodemailer.com/about/" target="_blank" rel="noopener">nodemailer</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// npm安装</span><br><span class="line">npm install nodemailer --save</span><br></pre></td></tr></table></figure></p>
+<p>Example<br>tip：如果是qq邮箱密码需要的是<a href="http://service.mail.qq.com/cgi-bin/help?subtype=1&amp;&amp;id=28&amp;&amp;no=1001256%27" target="_blank" rel="noopener">授权码</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line">const nodemailer = require(&apos;nodemailer&apos;);</span><br><span class="line"></span><br><span class="line">// Generate test SMTP service account from ethereal.email</span><br><span class="line">// Only needed if you don&apos;t have a real mail account for testing</span><br><span class="line">nodemailer.createTestAccount((err, account) =&gt; &#123;</span><br><span class="line">    // create reusable transporter object using the default SMTP transport</span><br><span class="line">    let transporter = nodemailer.createTransport(&#123;</span><br><span class="line">        // host,例如qq邮箱就是smtp.qq.com，</span><br><span class="line">        // qq企业邮箱就是smtp.exmail.qq.com</span><br><span class="line">        host: &apos;smtp.ethereal.email&apos;,</span><br><span class="line">        port: 587,</span><br><span class="line">        secure: false, // true for 465, false for other ports</span><br><span class="line">        auth: &#123;</span><br><span class="line">            user: account.user, // generated ethereal user</span><br><span class="line">            pass: account.pass // generated ethereal password</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // setup email data with unicode symbols</span><br><span class="line">    let mailOptions = &#123;</span><br><span class="line">        // 发送邮件的地址</span><br><span class="line">        from: &apos;&quot;Fred Foo 👻&quot; &lt;foo@example.com&gt;&apos;, // sender address</span><br><span class="line">        // 发送的对象，多个对象用英文逗号分隔</span><br><span class="line">        to: &apos;bar@example.com, baz@example.com&apos;, // list of receivers</span><br><span class="line">        subject: &apos;Hello ✔&apos;, // Subject line</span><br><span class="line">        text: &apos;Hello world?&apos;, // plain text body</span><br><span class="line">        html: &apos;&lt;b&gt;Hello world?&lt;/b&gt;&apos; // html body</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    // send mail with defined transport object</span><br><span class="line">    transporter.sendMail(mailOptions, (error, info) =&gt; &#123;</span><br><span class="line">        if (error) &#123;</span><br><span class="line">            return console.log(error);</span><br><span class="line">        &#125;</span><br><span class="line">        console.log(&apos;Message sent: %s&apos;, info.messageId);</span><br><span class="line">        // Preview only available when sending through an Ethereal account</span><br><span class="line">        console.log(&apos;Preview URL: %s&apos;, nodemailer.getTestMessageUrl(info));</span><br><span class="line"></span><br><span class="line">        // Message sent: &lt;b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com&gt;</span><br><span class="line">        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/20/egg定时任务发送邮件/" data-id="cji5kujak000392snrdhnliel" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/egg/">egg</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/20/node文件目录/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          node文件目录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/02/正则表达式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">正则表达式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/echarts/">echarts</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/egg/">egg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eslint/">eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongo/">mongo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/04/26/mysql/">mysql</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/20/node文件目录/">node文件目录</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/20/egg定时任务发送邮件/">egg定时任务发送邮件</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/02/正则表达式/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/21/js计算首屏图片/">js计算首屏图片</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 lebron<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

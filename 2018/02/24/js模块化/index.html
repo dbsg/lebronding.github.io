@@ -7,17 +7,17 @@
   
   <title>js模块化 | lebron</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="参考资料 JavaScript 模块化编程 - Module Pattern">
+  <meta name="description" content="通用的解决方案123456789101112131415161718192021222324252627282930313233(function (root, factory) &amp;#123;  if (typeof define === &amp;apos;function&amp;apos; &amp;amp;&amp;amp; define.amd) &amp;#123;    define(factory);  &amp;#125; e">
 <meta name="keywords" content="js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js模块化">
 <meta property="og:url" content="http://yoursite.com/2018/02/24/js模块化/index.html">
 <meta property="og:site_name" content="lebron">
-<meta property="og:description" content="参考资料 JavaScript 模块化编程 - Module Pattern">
-<meta property="og:updated_time" content="2018-02-27T08:59:32.000Z">
+<meta property="og:description" content="通用的解决方案123456789101112131415161718192021222324252627282930313233(function (root, factory) &amp;#123;  if (typeof define === &amp;apos;function&amp;apos; &amp;amp;&amp;amp; define.amd) &amp;#123;    define(factory);  &amp;#125; e">
+<meta property="og:updated_time" content="2018-05-18T06:48:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js模块化">
-<meta name="twitter:description" content="参考资料 JavaScript 模块化编程 - Module Pattern">
+<meta name="twitter:description" content="通用的解决方案123456789101112131415161718192021222324252627282930313233(function (root, factory) &amp;#123;  if (typeof define === &amp;apos;function&amp;apos; &amp;amp;&amp;amp; define.amd) &amp;#123;    define(factory);  &amp;#125; e">
   
     <link rel="alternate" href="/atom.xml" title="lebron" type="application/atom+xml">
   
@@ -80,14 +80,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+        <p>通用的解决方案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">(function (root, factory) &#123;</span><br><span class="line">  if (typeof define === &apos;function&apos; &amp;&amp; define.amd) &#123;</span><br><span class="line">    define(factory);</span><br><span class="line">  &#125; else if (typeof exports === &apos;object&apos;) &#123;</span><br><span class="line">    module.exports = factory;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    root.MYMODULE = factory();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(this, function () &#123;</span><br><span class="line">  // </span><br><span class="line">&#125;);</span><br><span class="line">// UMD模块定义</span><br><span class="line">(function (root, factory) &#123;</span><br><span class="line">    if (typeof define === &apos;function&apos; &amp;&amp; define.amd) &#123;</span><br><span class="line">        // AMD. Register as an anonymous module.</span><br><span class="line">        define([&apos;b&apos;], factory);</span><br><span class="line">    &#125; else if (typeof module === &apos;object&apos; &amp;&amp; module.exports) &#123;</span><br><span class="line">        // Node. Does not work with strict CommonJS, but</span><br><span class="line">        // only CommonJS-like environments that support module.exports,</span><br><span class="line">        // like Node.</span><br><span class="line">        module.exports = factory(require(&apos;b&apos;));</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // Browser globals (root is window)</span><br><span class="line">        root.returnExports = factory(root.b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;(this, function (b) &#123;</span><br><span class="line">    //use b in some fashion.</span><br><span class="line"></span><br><span class="line">    // Just return a value to define the module export.</span><br><span class="line">    // This example returns an object, but the module</span><br><span class="line">    // can return a function as the exported value.</span><br><span class="line">    return &#123;&#125;;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
 <li><a href="https://my.oschina.net/chenzhiqiang/blog/129783" target="_blank" rel="noopener">JavaScript 模块化编程 - Module Pattern</a></li>
+</ul>
+<ul>
+<li>(<a href="https://toddmotto.com/what-function-window-document-undefined-iife-really-means/#non-browser-global-environments" target="_blank" rel="noopener">https://toddmotto.com/what-function-window-document-undefined-iife-really-means/#non-browser-global-environments</a>)</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/24/js模块化/" data-id="cjesjrpky00048ysncnr3zbto" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/02/24/js模块化/" data-id="cji5kujb2000892snowynnpsx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
@@ -99,7 +103,7 @@
 <nav id="article-nav">
   
     <a href="/2018/02/27/js邪门歪道/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nuevo</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           js邪门歪道
@@ -109,7 +113,7 @@
   
   
     <a href="/2018/01/30/page/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Viejo</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">网页性能监控</div>
     </a>
   
@@ -126,7 +130,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eslint/">eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongo/">mongo</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/echarts/">echarts</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/egg/">egg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eslint/">eslint</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongo/">mongo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a></li></ul>
     </div>
   </div>
 
@@ -134,9 +138,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
     </div>
   </div>
 
@@ -144,28 +148,28 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/03/01/mongoose/">mongoose</a>
+            <a href="/2018/04/26/mysql/">mysql</a>
           </li>
         
           <li>
-            <a href="/2018/02/27/js学习网站/">js学习网站</a>
+            <a href="/2018/04/20/node文件目录/">node文件目录</a>
           </li>
         
           <li>
-            <a href="/2018/02/27/浏览器点击复制功能/">浏览器点击复制功能</a>
+            <a href="/2018/04/20/egg定时任务发送邮件/">egg定时任务发送邮件</a>
           </li>
         
           <li>
-            <a href="/2018/02/27/js邪门歪道/">js邪门歪道</a>
+            <a href="/2018/04/02/正则表达式/">正则表达式</a>
           </li>
         
           <li>
-            <a href="/2018/02/24/js模块化/">js模块化</a>
+            <a href="/2018/03/21/js计算首屏图片/">js计算首屏图片</a>
           </li>
         
       </ul>
@@ -181,7 +185,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 lebron<br>
-      Construido por <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
